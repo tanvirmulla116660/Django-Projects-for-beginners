@@ -1,9 +1,22 @@
 {% extends "personal/header.html" %}
 
 {% block content %}
-  {% for post in object_list %}
-    <h5> {{ post.date|date:"Y-m-d" }}
-      <a href="/blog/{{post.id}}"> {{post.title}} </a>
-    </h5>
-  {% endfor %}
+  <section class="blog-list">
+    {% if object_list %}
+      <ul>
+        {% for post in object_list %}
+          <li>
+            <time datetime="{{ post.date|date:'Y-m-d' }}">
+              {{ post.date|date:"F j, Y" }}
+            </time> -
+            <a href="{% url 'blog_detail' post.id %}" title="{{ post.title }}">
+              {{ post.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No blog posts available at the moment. Please check back later.</p>
+    {% endif %}
+  </section>
 {% endblock %}
